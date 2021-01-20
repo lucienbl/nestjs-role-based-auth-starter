@@ -1,0 +1,113 @@
+{
+  "name": "nestjs-firebase-role-auth-starter",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Lucien Blunk-Lallet",
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build && npm run copy-static-assets",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "npm run copy-static-assets && nest start --watch",
+    "start:debug": "npm run copy-static-assets && nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "typeorm:migrate": "npm run typeorm migration:generate -- -n Migration",
+    "typeorm:run": "npm run typeorm migration:run",
+    "release": "release-it"
+  },
+  "dependencies": {
+    "@nestjs-modules/mailer": "^1.5.1",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.4.0",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/passport": "^7.0.0",
+    "@nestjs/platform-express": "^7.4.4",
+    "@nestjs/schedule": "^0.4.1",
+    "@nestjs/swagger": "^4.5.1",
+    "@nestjs/typeorm": "^7.0.0",
+    "class-transformer": "^0.3.2",
+    "class-validator": "^0.13.1",
+    "firebase-admin": "^8.11.0",
+    "moment": "^2.24.0",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.17",
+    "passport": "^0.4.1",
+    "passport-firebase-jwt": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^8.0.3",
+    "pug": "^3.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.4",
+    "swagger-ui-express": "^4.1.4",
+    "typeorm": "^0.2.24"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^7.0.0",
+    "@nestjs/schematics": "^7.0.0",
+    "@nestjs/testing": "^7.0.0",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@types/express": "^4.17.3",
+    "@types/html-pdf": "^2.2.0",
+    "@types/jest": "25.1.4",
+    "@types/multer": "^1.4.4",
+    "@types/node": "^13.9.1",
+    "@types/shelljs": "^0.8.8",
+    "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "release-it": "^13.7.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "25.2.1",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.7.4"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
