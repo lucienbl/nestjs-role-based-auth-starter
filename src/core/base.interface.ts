@@ -15,40 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Exclude, Expose } from "class-transformer";
-import BaseDto from "../../core/base.dto";
+import { Expose } from "class-transformer";
 
-export class UserDto extends BaseDto {
-
-  @Exclude()
-  firebaseUid: string;
+export class IBase {
 
   @Expose()
-  firstName: string;
+  id: string;
 
   @Expose()
-  lastName: string;
+  version: number;
 
   @Expose()
-  username: string;
+  updateDate: Date;
 
   @Expose()
-  email: string;
-
-  @Expose()
-  emailVerified: boolean;
-
-  @Exclude()
-  emailVerificationToken: string;
-
-  @Expose()
-  startMoney: number;
-
-  @Exclude()
-  fcmToken: string;
-
-  @Expose()
-  roles: number;
+  creationDate: Date;
 }
 
-export default UserDto;
+export default IBase;

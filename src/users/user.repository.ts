@@ -20,15 +20,17 @@ import { plainToClass } from "class-transformer";
 import { EntityRepository, Repository } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { RegisterUserDto } from "./dto/register-user.dto";
-import UserDto from "./dto/user.dto";
+import IUser from "./interfaces/user.interface";
 import { UpdateFcmTokenDto } from "./dto/update-fcm-token.dto";
+import { MapData } from "../core/decorators/map-data.decorator";
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
 
   private logger = new Logger(UserRepository.name);
 
-  async registerUser(registerUserDto: RegisterUserDto): Promise<UserDto> {
+  @MapData(IUser)
+  async registerUser(registerUserDto: RegisterUserDto): Promise<IUser> {
     try {
       const userEntity = new UserEntity();
       userEntity.username = registerUserDto.username;
@@ -37,7 +39,7 @@ export class UserRepository extends Repository<UserEntity> {
       userEntity.firstName = registerUserDto.firstName;
       userEntity.lastName = registerUserDto.lastName;
 
-      return plainToClass(UserDto, await this.save(userEntity));
+      return this.save(userEntity);
     } catch (error) {
       this.logger.error(error.message, error.stack);
       if (error.code === '23505') {
@@ -48,14 +50,16 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async findUserById(id: string): Promise<UserDto> {
-    return plainToClass(UserDto, await this.findOneOrFail(id));
+  @MapData(IUser)
+  async findUserById(id: string): Promise<IUser> {
+    return this.findOneOrFail(id);
   }
 
-  async updateUserFcmToken({ id }: UserDto, updateFcmTokenDto: UpdateFcmTokenDto): Promise<UserDto> {
+  @MapData(IUser)
+  async updateUserFcmToken({ id }: IUser, updateFcmTokenDto: UpdateFcmTokenDto): Promise<IUser> {
     const userEntity = await this.findUserById(id);
     userEntity.fcmToken = updateFcmTokenDto.fcmToken;
 
-    return plainToClass(UserDto, await this.save(userEntity));
+    return this.save(userEntity);
   }
 }

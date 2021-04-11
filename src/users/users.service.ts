@@ -19,7 +19,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from "./user.repository";
 import { RegisterUserDto } from "./dto/register-user.dto";
-import UserDto from "./dto/user.dto";
+import IUser from "./interfaces/user.interface";
 import { UpdateFcmTokenDto } from "./dto/update-fcm-token.dto";
 
 @Injectable()
@@ -29,15 +29,15 @@ export class UsersService {
     private readonly usersRepository: UserRepository,
   ) {}
 
-  async getUserById(id: string): Promise<UserDto> {
+  async getUserById(id: string): Promise<IUser> {
     return this.usersRepository.findUserById(id);
   }
 
-  async registerUser(registerUserDto: RegisterUserDto): Promise<UserDto> {
+  async registerUser(registerUserDto: RegisterUserDto): Promise<IUser> {
     return this.usersRepository.registerUser(registerUserDto);
   }
 
-  async updateUserFcmToken(userDto: UserDto, updateFcmTokenDto: UpdateFcmTokenDto): Promise<UserDto> {
+  async updateUserFcmToken(userDto: IUser, updateFcmTokenDto: UpdateFcmTokenDto): Promise<IUser> {
     return this.usersRepository.updateUserFcmToken(userDto, updateFcmTokenDto);
   }
 }

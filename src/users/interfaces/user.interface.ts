@@ -15,21 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
+import IBase from "../../core/base.interface";
+import { UserEntity } from "../user.entity";
 
-export class BaseDto {
+export class IUser extends IBase implements UserEntity {
 
-  @Expose()
-  id: string;
-
-  @Expose()
-  version: number;
-
-  @Expose()
-  updateDate: Date;
+  @Exclude({ toPlainOnly: true })
+  firebaseUid: string;
 
   @Expose()
-  creationDate: Date;
+  firstName: string;
+
+  @Expose()
+  lastName: string;
+
+  @Expose()
+  username: string;
+
+  @Expose()
+  email: string;
+
+  @Expose()
+  emailVerified: boolean;
+
+  @Exclude({ toPlainOnly: true })
+  emailVerificationToken: string;
+
+  @Expose()
+  startMoney: number;
+
+  @Exclude({ toPlainOnly: true })
+  fcmToken: string;
+
+  @Expose()
+  roles: number;
 }
 
-export default BaseDto;
+export default IUser;

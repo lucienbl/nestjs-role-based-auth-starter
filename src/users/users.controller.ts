@@ -25,7 +25,7 @@ import { GetUser } from "./decorators/get-user.decorator";
 import { UsersService } from "./users.service";
 import { UpdateFcmTokenDto } from "./dto/update-fcm-token.dto";
 import { RegisterUserDto } from "./dto/register-user.dto";
-import UserDto from "./dto/user.dto";
+import IUser from "./interfaces/user.interface";
 import { Public } from "../auth/decorators/public.decorator";
 
 @ApiTags("Users")
@@ -45,13 +45,13 @@ export class UsersController {
 
     @Get('/me')
     @RolesAllowed(Roles.USER)
-    getMe(@GetUser() userDto: UserDto) {
+    getMe(@GetUser() userDto: IUser) {
         return userDto;
     }
 
     @Put('/fcmToken')
     @RolesAllowed(Roles.USER)
-    updateFcmToken(@GetUser() userDto: UserDto, @Body() updateFcmTokenDto: UpdateFcmTokenDto) {
+    updateFcmToken(@GetUser() userDto: IUser, @Body() updateFcmTokenDto: UpdateFcmTokenDto) {
         return this.usersService.updateUserFcmToken(userDto, updateFcmTokenDto);
     }
 }

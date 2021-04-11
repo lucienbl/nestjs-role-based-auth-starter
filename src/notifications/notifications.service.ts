@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { messaging } from 'firebase-admin';
-import UserDto from "../users/dto/user.dto";
+import IUser from "../users/interfaces/user.interface";
 
 @Injectable()
 export class NotificationsService {
 
-  async sendUserNotification(userDto: UserDto, title: string, body: string) {
+  async sendUserNotification(userDto: IUser, title: string, body: string) {
     if (userDto.fcmToken) {
       return messaging().sendToDevice(userDto.fcmToken, {
         notification: {
